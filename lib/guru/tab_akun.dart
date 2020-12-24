@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login/guru/loginscreen.dart';
+import 'package:login/auth_service.dart';
 
 class Akun extends StatefulWidget {
   final String username;
@@ -84,7 +85,8 @@ class _AkunState extends State<Akun> {
                       color: Colors.red,
                       elevation: 7.0,
                       child: GestureDetector(
-                        onTap: () {
+                        onTap: () async {
+                          await AuthServices.signOut();
                           logout();
                         },
                         child: Center(

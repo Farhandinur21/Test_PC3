@@ -66,7 +66,7 @@ class _LoginState extends State<Login> {
                       controller: emailInput,
                       validator: (e) {
                         if (e.isEmpty) {
-                          return "Isi Username Anda";
+                          return "Isi Email Anda";
                         }
 
                         return null;
@@ -79,9 +79,9 @@ class _LoginState extends State<Login> {
                           Icons.person,
                           size: 25.0,
                         ),
-                        hintText: "Masukkan Username",
+                        hintText: "Masukkan Email",
                         hintStyle: TextStyle(color: Colors.black87),
-                        labelText: "Username",
+                        labelText: "Email",
                         labelStyle: TextStyle(color: Colors.black87),
                       )),
                   SizedBox(

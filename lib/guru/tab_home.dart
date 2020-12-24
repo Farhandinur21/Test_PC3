@@ -7,10 +7,6 @@ import 'package:login/guru/hal_pertemuan.dart';
 //import 'package:login/signup.dart';
 
 class Tabhome extends StatefulWidget {
-  final String username;
-
-  Tabhome({this.username});
-
   @override
   _TabhomeState createState() => _TabhomeState();
 }
@@ -63,123 +59,124 @@ class _TabhomeState extends State<Tabhome> {
   }
 
   Widget _dataKelas({Map daftar}) {
-    return Card(
-        //margin: EdgeInsets.symmetric(vertical: 5),
-        //padding: EdgeInsets.all(5),
-        color: Colors.green[300],
-        child: Row(
-          children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(
-                      Icons.book,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                    SizedBox(
-                      width: 6,
-                    ),
-                    Text(
-                      "Mata Pelajaran :",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                    ),
-                    SizedBox(
-                      width: 6,
-                    ),
-                    Text(
-                      daftar['nama_mapel'],
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                    ),
-                    SizedBox(
-                      width: 6,
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 6,
-                ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.timer,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                    SizedBox(
-                      width: 6,
-                    ),
-                    Text(
-                      "Jadwal :",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                    ),
-                    SizedBox(
-                      width: 6,
-                    ),
-                    Text(
-                      daftar['jadwal'],
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
+    return GestureDetector(
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) => Pertemuan(
+                    pelajaran: daftar['nama_mapel'],
+                  ))),
+      child: Card(
+          //margin: EdgeInsets.symmetric(vertical: 5),
+          //padding: EdgeInsets.all(5),
+          color: Colors.green[300],
+          child: Row(
+            children: <Widget>[
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.book,
                         color: Colors.white,
+                        size: 20,
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 6,
-                ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.person,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                    SizedBox(
-                      width: 6,
-                    ),
-                    Text(
-                      "Nama Guru : ",
-                      style: TextStyle(
+                      SizedBox(
+                        width: 6,
+                      ),
+                      Text(
+                        "Mata Pelajaran :",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white),
+                      ),
+                      SizedBox(
+                        width: 6,
+                      ),
+                      Text(
+                        daftar['nama_mapel'],
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white),
+                      ),
+                      SizedBox(
+                        width: 6,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 6,
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.timer,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                      SizedBox(
+                        width: 6,
+                      ),
+                      Text(
+                        "Jadwal :",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white),
+                      ),
+                      SizedBox(
+                        width: 6,
+                      ),
+                      Text(
+                        daftar['jadwal'],
+                        style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                    ),
-                    SizedBox(
-                      width: 6,
-                    ),
-                    Text(
-                      daftar['nama_guru'],
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            /*IconButton(
-              icon: Icon(Icons.keyboard_arrow_right),
-              onPressed: () {
-                temu();
-              },              
-            ),
-             */
-          ],
-        ));
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 6,
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.person,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                      SizedBox(
+                        width: 6,
+                      ),
+                      Text(
+                        "Nama Guru : ",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white),
+                      ),
+                      SizedBox(
+                        width: 6,
+                      ),
+                      Text(
+                        daftar['nama_guru'],
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          )),
+    );
   }
 }
