@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:login/guru/hal_pertemuan.dart';
+//import 'package:login/guru/hal_pertemuan.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class BuatPertemuan extends StatefulWidget {
+  final String pelajaran;
+  BuatPertemuan({this.pelajaran});
+
   @override
   _BuatPertemuanState createState() => _BuatPertemuanState();
 }
@@ -10,22 +13,24 @@ class BuatPertemuan extends StatefulWidget {
 class _BuatPertemuanState extends State<BuatPertemuan> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController jumlahpertemuanInput = new TextEditingController();
-
+/*
   DatabaseReference pertemuanTambah = FirebaseDatabase.instance
       .reference()
       .child('pertemuan')
-      .orderByChild("mata_pelajaran");
+      .orderByChild("mata_pelajaran");*/
+  DatabaseReference pertemuanTambah =
+      FirebaseDatabase.instance.reference().child('pertemuan');
 
   void tambahPertemuan() {
+    print(widget.pelajaran);
     pertemuanTambah.push().set({
-      'mata_pelajaran'
-          'pertemuan_ke': jumlahpertemuanInput.text,
+      'mata_pelajaran': widget.pelajaran,
+      'pertemuan_ke': jumlahpertemuanInput.text,
     });
   }
 
   void submit() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => Pertemuan()));
+    Navigator.pop(context);
   }
 
   @override

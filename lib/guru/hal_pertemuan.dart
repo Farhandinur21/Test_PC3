@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:login/guru/buatpertemuan.dart';
+import 'package:login/guru/hal_absen.dart';
 
 class Pertemuan extends StatefulWidget {
   final String pelajaran;
@@ -13,12 +14,14 @@ class Pertemuan extends StatefulWidget {
 
 class _PertemuanState extends State<Pertemuan> {
   Query _ref;
-  DatabaseReference tambahPertemuan =
-      FirebaseDatabase.instance.reference().child('pertemuan');
 
   void pertemuanKe() {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => BuatPertemuan()));
+        context,
+        MaterialPageRoute(
+            builder: (context) => BuatPertemuan(
+                  pelajaran: widget.pelajaran,
+                )));
   }
 
   @override
@@ -29,6 +32,11 @@ class _PertemuanState extends State<Pertemuan> {
         .child('pertemuan')
         .orderByChild("mata_pelajaran")
         .equalTo(widget.pelajaran);
+  }
+
+  void pindahHalAbsen() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => HalamanAbsen()));
   }
 
   @override
@@ -46,7 +54,14 @@ class _PertemuanState extends State<Pertemuan> {
           itemBuilder: (BuildContext context, DataSnapshot snapshot,
               Animation<double> animation, int index) {
             Map daftar = snapshot.value;
-            return _dataPertemuan(daftar: daftar);
+            return GestureDetector(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HalamanAbsen(
+                              pertemuan: daftar['pertemuan_ke'],
+                            ))),
+                child: _dataPertemuan(daftar: daftar));
           },
         ),
       ),
@@ -61,86 +76,84 @@ class _PertemuanState extends State<Pertemuan> {
 }
 
 Widget _dataPertemuan({Map daftar}) {
-  return GestureDetector(
-    onTap: () => {},
-    child: Card(
-        //margin: EdgeInsets.symmetric(vertical: 5),
-        //padding: EdgeInsets.all(5),
-        color: Colors.green[300],
-        child: Row(
-          children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+  return Card(
+    //margin: EdgeInsets.symmetric(vertical: 5),
+    //padding: EdgeInsets.all(5),
+    color: Colors.green[300],
+    child: Row(
+      children: <Widget>[
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
               children: [
-                Row(
-                  children: [
-                    Icon(
-                      Icons.book,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                    SizedBox(
-                      width: 6,
-                    ),
-                    Text(
-                      "Mata Pelajaran :",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                    ),
-                    SizedBox(
-                      width: 6,
-                    ),
-                    Text(
-                      daftar['mata_pelajaran'],
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                    ),
-                    SizedBox(
-                      width: 6,
-                    ),
-                  ],
+                Icon(
+                  Icons.book,
+                  color: Colors.white,
+                  size: 20,
                 ),
                 SizedBox(
-                  height: 6,
+                  width: 6,
                 ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.timer,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                    SizedBox(
-                      width: 6,
-                    ),
-                    Text(
-                      "pertemuan ke :",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                    ),
-                    SizedBox(
-                      width: 6,
-                    ),
-                    Text(
-                      daftar['pertemuan_ke'],
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
+                Text(
+                  "Mata Pelajaran :",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white),
+                ),
+                SizedBox(
+                  width: 6,
+                ),
+                Text(
+                  daftar['mata_pelajaran'],
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white),
+                ),
+                SizedBox(
+                  width: 6,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 6,
+            ),
+            Row(
+              children: [
+                Icon(
+                  Icons.timer,
+                  color: Colors.white,
+                  size: 20,
+                ),
+                SizedBox(
+                  width: 6,
+                ),
+                Text(
+                  "pertemuan ke :",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white),
+                ),
+                SizedBox(
+                  width: 6,
+                ),
+                Text(
+                  daftar['pertemuan_ke'],
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
                 ),
               ],
             ),
           ],
-        )),
+        ),
+      ],
+    ),
   );
 }
