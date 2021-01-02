@@ -1,49 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:login/guru/buatpertemuan.dart';
-import 'package:login/guru/hal_absen.dart';
+import 'nilai_absen.dart';
 
-class Pertemuan extends StatefulWidget {
-  final String pelajaran;
-  Pertemuan({this.pelajaran});
+class Siswa extends StatefulWidget {
+  final String pertemuan;
+  Siswa({this.pertemuan});
 
   @override
-  _PertemuanState createState() => _PertemuanState();
+  _SiswaState createState() => _SiswaState();
 }
 
-class _PertemuanState extends State<Pertemuan> {
+class _SiswaState extends State<Siswa> {
   Query _ref;
 
-  void pertemuanKe() {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => BuatPertemuan(
-                  pelajaran: widget.pelajaran,
-                )));
-  }
-
   @override
-  void initState() {
+  initState() {
     super.initState();
     _ref = FirebaseDatabase.instance
         .reference()
-        .child('pertemuan')
-        .orderByChild("mata_pelajaran")
-        .equalTo(widget.pelajaran); 
+        .child('siswa')
+        .orderByChild("nis");
   }
 
-  void pindahHalAbsen() {
+  pindahHalAbsen() {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => Siswa()));
+        context, MaterialPageRoute(builder: (context) => HalamanAbsen()));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.pelajaran),
+        title: Text("Pertemuan Ke : " + widget.pertemuan),
         backgroundColor: Colors.green,
       ),
       body: Container(
@@ -51,7 +40,6 @@ class _PertemuanState extends State<Pertemuan> {
         height: double.infinity,
         child: FirebaseAnimatedList(
           query: _ref,
-          //itemCount: itemCount,
           itemBuilder: (BuildContext context, DataSnapshot snapshot,
               Animation<double> animation, int index) {
             Map daftar = snapshot.value;
@@ -59,8 +47,8 @@ class _PertemuanState extends State<Pertemuan> {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Siswa(
-                    pertemuan: daftar['pertemuan_ke'],
+                  builder: (context) => HalamanAbsen(
+                    nis: daftar['nis'],
                   )
                 )
               ),
@@ -70,19 +58,12 @@ class _PertemuanState extends State<Pertemuan> {
         ),
       ),
       backgroundColor: Colors.white,
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.green,
-          splashColor: Colors.white,
-          child: const Icon(Icons.add),
-          onPressed: () => pertemuanKe()),
     );
   }
 }
 
 Widget _dataPertemuan({Map daftar}) {
   return Card(
-    //margin: EdgeInsets.symmetric(vertical: 5),
-    //padding: EdgeInsets.all(5),
     color: Colors.green[300],
     child: Row(
       children: <Widget>[
@@ -101,7 +82,7 @@ Widget _dataPertemuan({Map daftar}) {
                   width: 6,
                 ),
                 Text(
-                  "Mata Pelajaran :",
+                  "Nama :",
                   style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -111,7 +92,7 @@ Widget _dataPertemuan({Map daftar}) {
                   width: 6,
                 ),
                 Text(
-                  daftar['mata_pelajaran'],
+                  daftar['nama'],
                   style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -136,7 +117,7 @@ Widget _dataPertemuan({Map daftar}) {
                   width: 6,
                 ),
                 Text(
-                  "pertemuan ke :",
+                  "nis : ",
                   style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -146,7 +127,7 @@ Widget _dataPertemuan({Map daftar}) {
                   width: 6,
                 ),
                 Text(
-                  daftar['pertemuan_ke'],
+                  daftar['nis'],
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
