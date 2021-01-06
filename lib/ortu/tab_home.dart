@@ -1,6 +1,3 @@
-import 'dart:async';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login/guru/buatkelas.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -19,22 +16,10 @@ class Tabhome extends StatefulWidget {
 class _TabhomeState extends State<Tabhome> {
 
   Query _ref;
-  String uid;
-  static FirebaseAuth _auth = FirebaseAuth.instance;
-
-  Timer timer;
-  int counter = 0;
-
-  queryId()async{
-    final FirebaseUser user = await _auth.currentUser();
-    uid = user.uid.toString();
-  }
 
   @override
   void initState() {
     super.initState();
-    queryId();
-    timer = Timer.periodic(Duration(seconds: 1), (Timer t) => addValue());
     _ref = FirebaseDatabase.instance
         .reference()
         .child('data')
@@ -43,21 +28,14 @@ class _TabhomeState extends State<Tabhome> {
         .equalTo(widget.unik);
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    timer?.cancel();
-  }
-
-  void addValue() {
-    setState(() {
-       counter++; 
-    });
-  }
-
   pindah() {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => BuatKelas(unik: uid,)));
+        context, MaterialPageRoute(builder: (context) => BuatKelas()));
+  }
+
+  temu() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => Pertemuan()));
   }
 
   @override

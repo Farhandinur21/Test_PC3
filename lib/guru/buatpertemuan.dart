@@ -13,21 +13,49 @@ class BuatPertemuan extends StatefulWidget {
 class _BuatPertemuanState extends State<BuatPertemuan> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController jumlahpertemuanInput = new TextEditingController();
-/*
-  DatabaseReference pertemuanTambah = FirebaseDatabase.instance
-      .reference()
-      .child('pertemuan')
-      .orderByChild("mata_pelajaran");*/
+
   DatabaseReference pertemuanTambah =
       FirebaseDatabase.instance.reference().child('pertemuan');
 
+  DatabaseReference siswa =
+      FirebaseDatabase.instance.reference().child('siswa_pertemuan');
+
   void tambahPertemuan() {
-    print(widget.pelajaran);
+    //print(widget.pelajaran);
     pertemuanTambah.push().set({
       'mata_pelajaran': widget.pelajaran,
-      'pertemuan_ke': jumlahpertemuanInput.text,
+      'pertemuan_ke': widget.pelajaran+jumlahpertemuanInput.text,
     });
   }
+
+  siswaPertama(){
+    siswa.push().set({
+      'mata_pelajaran': widget.pelajaran,
+      'pertemuan_ke': widget.pelajaran+jumlahpertemuanInput.text,
+      'nama' : 'dodi',
+      'nis' : '1104111010001',
+    });
+  }
+
+  siswaKedua(){
+    siswa.push().set({
+      'mata_pelajaran': widget.pelajaran,
+      'pertemuan_ke': widget.pelajaran+jumlahpertemuanInput.text,
+      'nama' : 'dani',
+      'nis' : '1104111010002',
+    });
+  }
+
+  siswaKetiga(){
+    siswa.push().set({
+      'mata_pelajaran': widget.pelajaran,
+      'pertemuan_ke': widget.pelajaran+jumlahpertemuanInput.text,
+      'nama' : 'andi',
+      'nis' : '1104111010003',
+    });
+  }
+
+  
 
   void submit() {
     Navigator.pop(context);
@@ -100,6 +128,9 @@ class _BuatPertemuanState extends State<BuatPertemuan> {
                       child: InkWell(
                         onTap: () {
                           tambahPertemuan();
+                          siswaPertama();
+                          siswaKedua();
+                          siswaKetiga();
                           submit();
                         },
                         splashColor: Colors.white,

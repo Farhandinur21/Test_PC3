@@ -1,38 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:login/guru/homepage.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:login/auth_service.dart';
+import 'package:login/ortu/signup.dart';
 
-class BuatKelas extends StatefulWidget {
-  final String unik;
-  BuatKelas({this.unik});
-
+class Login extends StatefulWidget {
   @override
-  _BuatKelasState createState() => _BuatKelasState();
+  _LoginState createState() => _LoginState();
 }
 
-class _BuatKelasState extends State<BuatKelas> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController mataPelajaranInput = new TextEditingController();
-  TextEditingController jadwalInput = new TextEditingController();
-  TextEditingController namaGuru = new TextEditingController();
+class _LoginState extends State<Login> {
+  final _key = new GlobalKey<FormState>();
+  String alert = "siap login";
 
-  DatabaseReference kelasTambah = FirebaseDatabase.instance
-      .reference()
-      .child('data')
-      .child('mata_pelajaran');
+  TextEditingController emailInput = new TextEditingController();
+  TextEditingController passwordInput = new TextEditingController();
 
-  void tambahKelas() {
-    kelasTambah.push().set({
-      'jadwal': jadwalInput.text,
-      'nama_mapel': mataPelajaranInput.text,
-      'nama_guru': namaGuru.text,
-      'unik' : widget.unik,
-    });
+  check() {
+    final form = _key.currentState;
+    if (form.validate()) {
+      form.save();
+    }
   }
 
-  void submit() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => Homepage()));
+  void register() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Signup()));
   }
 
   @override
@@ -46,16 +36,23 @@ class _BuatKelasState extends State<BuatKelas> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Container(
+              width: 150,
+              height: 150,
+              padding: EdgeInsets.all(3),
+              child: Image.asset("img/pcontrol.jpg"),
+            ),
             SizedBox(
               height: 20,
             ),
             Text(
-              "BUAT KELAS",
-              style: TextStyle(fontSize: 30.0, color: Colors.green),
+              "Selamat Datang, Silahkan Masuk",
+              style: TextStyle(fontSize: 20.0, color: Colors.black),
             ),
             Padding(
               padding: EdgeInsets.all(5.0),
             ),
+            Text(alert),
             SizedBox(
               child: Padding(
                 padding: EdgeInsets.all(20.0),
@@ -63,68 +60,14 @@ class _BuatKelasState extends State<BuatKelas> {
               height: 20,
             ),
             Form(
-              key: _formKey,
+              key: _key,
               child: Column(
                 children: <Widget>[
                   TextFormField(
-                      controller: mataPelajaranInput,
+                      controller: emailInput,
                       validator: (e) {
                         if (e.isEmpty) {
-                          return "Isi Mata Pelajaran";
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        border: UnderlineInputBorder(),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black87)),
-                        prefixIcon: Icon(
-                          Icons.book,
-                          size: 25.0,
-                        ),
-                        hintText: "Masukkan Mata Pelajaran",
-                        hintStyle: TextStyle(color: Colors.black87),
-                        labelText: "Mata Pelajaran",
-                        labelStyle: TextStyle(color: Colors.black87),
-                      )),
-                  SizedBox(
-                    child: Padding(
-                      padding: EdgeInsets.all(10.0),
-                    ),
-                    height: 10,
-                  ),
-                  TextFormField(
-                      controller: jadwalInput,
-                      validator: (e) {
-                        if (e.isEmpty) {
-                          return "Isi jadwal kelas";
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        border: UnderlineInputBorder(),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black87)),
-                        prefixIcon: Icon(
-                          Icons.timer,
-                          size: 25.0,
-                        ),
-                        hintText: "Masukkan Jadwal Kelas",
-                        hintStyle: TextStyle(color: Colors.black87),
-                        labelText: "Jadwal Kelas",
-                        labelStyle: TextStyle(color: Colors.black87),
-                      )),
-                  SizedBox(
-                    child: Padding(
-                      padding: EdgeInsets.all(10.0),
-                    ),
-                    height: 10,
-                  ),
-                  TextFormField(
-                      controller: namaGuru,
-                      validator: (e) {
-                        if (e.isEmpty) {
-                          return "Isi Nama guru pengampu";
+                          return "Isi Username Anda";
                         }
                         return null;
                       },
@@ -136,9 +79,37 @@ class _BuatKelasState extends State<BuatKelas> {
                           Icons.person,
                           size: 25.0,
                         ),
-                        hintText: "Masukkan Nama Guru Pengampu",
+                        hintText: "Masukkan Username",
                         hintStyle: TextStyle(color: Colors.black87),
-                        labelText: "Guru Pengampu",
+                        labelText: "Username",
+                        labelStyle: TextStyle(color: Colors.black87),
+                      )),
+                  SizedBox(
+                    child: Padding(
+                      padding: EdgeInsets.all(10.0),
+                    ),
+                    height: 10,
+                  ),
+                  TextFormField(
+                      controller: passwordInput,
+                      validator: (e) {
+                        if (e.isEmpty) {
+                          return "Isi Password Anda";
+                        }
+                        return null;
+                      },
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: UnderlineInputBorder(),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black87)),
+                        prefixIcon: Icon(
+                          Icons.vpn_key,
+                          size: 25.0,
+                        ),
+                        hintText: "Masukkan Password",
+                        hintStyle: TextStyle(color: Colors.black87),
+                        labelText: "Password",
                         labelStyle: TextStyle(color: Colors.black87),
                       )),
                   SizedBox(
@@ -148,16 +119,33 @@ class _BuatKelasState extends State<BuatKelas> {
                     color: Colors.green,
                     elevation: 5,
                     child: Container(
+                        height: 35.0,
+                        child: InkWell(
+                            splashColor: Colors.white,
+                            child: Center(
+                              child: Text(
+                                "Masuk",
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white),
+                              ),
+                            ),
+                            onTap: () async {
+                              await AuthServices.signIn(
+                                  emailInput.text, passwordInput.text);
+                                  check();
+                            })),
+                  ),
+                  Card(
+                    color: Colors.green,
+                    elevation: 5,
+                    child: Container(
                       height: 35.0,
                       child: InkWell(
-                        onTap: () {
-                          tambahKelas();
-                          submit();
-                        },
+                        onTap: () => register(),
                         splashColor: Colors.white,
                         child: Center(
                           child: Text(
-                            "Submit",
+                            "Buat Akun",
                             style: TextStyle(fontSize: 20, color: Colors.white),
                           ),
                         ),
@@ -166,7 +154,7 @@ class _BuatKelasState extends State<BuatKelas> {
                   )
                 ],
               ),
-            ),
+            )
           ],
         ),
       ),

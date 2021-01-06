@@ -36,7 +36,7 @@ class _PertemuanState extends State<Pertemuan> {
 
   void pindahHalAbsen() {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => Siswa()));
+        context, MaterialPageRoute(builder: (context) => HalamanAbsen()));
   }
 
   @override
@@ -59,7 +59,7 @@ class _PertemuanState extends State<Pertemuan> {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Siswa(
+                  builder: (context) => HalamanAbsen(
                     pertemuan: daftar['pertemuan_ke'],
                   )
                 )
