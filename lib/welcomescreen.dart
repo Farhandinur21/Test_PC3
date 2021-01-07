@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login/verifikasi_guru.dart';
+import 'package:login/verifikasi_ortu.dart';
 
 class Welcomescreen extends StatefulWidget {
   @override
@@ -7,8 +8,12 @@ class Welcomescreen extends StatefulWidget {
 }
 
 class _WelcomescreenState extends State<Welcomescreen> {
-  void lewat() {
+  guru() {
     Navigator.push(context, MaterialPageRoute(builder: (context) => VerifikasiGuru()));
+  }
+
+  ortu() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => VerifikasiOrtu()));
   }
 
   @override
@@ -73,7 +78,7 @@ class _WelcomescreenState extends State<Welcomescreen> {
               child: Container(
                 height: 35.0,
                 child: InkWell(
-                  onTap: () => lewat(),
+                  onTap: () => guru(),
                   splashColor: Colors.white,
                   child: Center(
                     child: Text(
@@ -93,7 +98,7 @@ class _WelcomescreenState extends State<Welcomescreen> {
               child: Container(
                 height: 35.0,
                 child: InkWell(
-                  onTap: () => lewat(),
+                  onTap: () => ortu(),
                   splashColor: Colors.white,
                   child: Center(
                     child: Text(

@@ -20,28 +20,28 @@ class _SignupState extends State<Signup> {
 
   TextEditingController namaLengkapInput = new TextEditingController();
   TextEditingController emailInput = new TextEditingController();
-  TextEditingController nipInput = new TextEditingController();
+  TextEditingController nisInput = new TextEditingController();
   TextEditingController passwordInput = new TextEditingController();
 
-  dataGuru() async {
+  dataOrtu() async {
     final FirebaseUser user = await _auth.currentUser();
     String uid = user.uid;
 
     buatDataGuru.child(uid).set({
-      'nama_guru' : namaLengkapInput.text,
+      'nama_ortu' : namaLengkapInput.text,
       'email' : emailInput.text,
-      'nip' : nipInput.text,
+      'nis' : nisInput.text,
     });
   }
 
   kondisiKirim(){
     if(namaLengkapInput.text == "" 
       || emailInput.text == ""
-      || nipInput.text == ""
+      || nisInput.text == ""
       || passwordInput.text == ""){
         check();
     }else{
-      dataGuru();
+      dataOrtu();
       Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
     }
   }
@@ -144,10 +144,10 @@ class _SignupState extends State<Signup> {
                     height: 10,
                   ),
                   TextFormField(
-                      controller: nipInput,
+                      controller: nisInput,
                       validator: (e) {
                         if (e.isEmpty) {
-                          return "Isi NIP Anda";
+                          return "Isi NIS Anak Anda";
                         }
                         return null;
                       },
@@ -159,9 +159,9 @@ class _SignupState extends State<Signup> {
                           Icons.person,
                           size: 25.0,
                         ),
-                        hintText: "Isi NIP anda",
+                        hintText: "Isi NIS anak anda",
                         hintStyle: TextStyle(color: Colors.black87),
-                        labelText: "NIP",
+                        labelText: "NIS anak anda",
                         labelStyle: TextStyle(color: Colors.black87),
                       )),
                   SizedBox(

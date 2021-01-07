@@ -3,7 +3,7 @@ import 'auth_service.dart';
 import 'package:provider/provider.dart';
 import 'ortu/wrapper.dart';
 
-class VerifikasiGuru extends StatelessWidget {
+class VerifikasiOrtu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider.value(

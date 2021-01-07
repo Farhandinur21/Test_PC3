@@ -20,7 +20,7 @@ class _AkunState extends State<Akun> {
     _ref = FirebaseDatabase.instance
         .reference()
         .child('data')
-        .child('guru')
+        .child('orang_tua')
         .child(widget.unik);
   }
 
@@ -69,7 +69,7 @@ class _AkunState extends State<Akun> {
                           ])),
                   SizedBox(height: 50.0),
                   Text(
-                    '${_guru.namaGuru}',
+                    '${_guru.namaOrtu}',
                     style: TextStyle(
                         fontSize: 30.0,
                         fontWeight: FontWeight.bold,
@@ -77,7 +77,7 @@ class _AkunState extends State<Akun> {
                   ),
                   SizedBox(height: 15.0),
                   Text(
-                    '${_guru.nip}',
+                    'nis anak : ${_guru.nis}',
                     style: TextStyle(
                         fontSize: 17.0,
                         fontStyle: FontStyle.italic,
@@ -113,15 +113,15 @@ class _AkunState extends State<Akun> {
 }
 
 class Profile{
-  final String namaGuru;
-  final String nip;
+  final String namaOrtu;
+  final String nis;
 
-  Profile({this.namaGuru,this.nip});
+  Profile({this.namaOrtu,this.nis});
 
   factory Profile.fromJson(Map<dynamic, dynamic>json){
     return Profile(
-      namaGuru: (json['nama_guru']),
-      nip: (json['nip'])
+      namaOrtu: (json['nama_ortu']),
+      nis: (json['nis'])
     );
   }
 }

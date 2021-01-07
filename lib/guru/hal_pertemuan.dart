@@ -51,7 +51,6 @@ class _PertemuanState extends State<Pertemuan> {
         height: double.infinity,
         child: FirebaseAnimatedList(
           query: _ref,
-          //itemCount: itemCount,
           itemBuilder: (BuildContext context, DataSnapshot snapshot,
               Animation<double> animation, int index) {
             Map daftar = snapshot.value;
@@ -81,8 +80,6 @@ class _PertemuanState extends State<Pertemuan> {
 
 Widget _dataPertemuan({Map daftar}) {
   return Card(
-    //margin: EdgeInsets.symmetric(vertical: 5),
-    //padding: EdgeInsets.all(5),
     color: Colors.green[300],
     child: Row(
       children: <Widget>[
